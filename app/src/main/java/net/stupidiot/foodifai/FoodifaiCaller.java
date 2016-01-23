@@ -1,3 +1,5 @@
+package net.stupidiot.foodifai;
+
 import com.clarifai.api.ClarifaiClient;
 import com.clarifai.api.RecognitionRequest;
 import com.clarifai.api.RecognitionResult;
@@ -18,7 +20,7 @@ public class FoodifaiCaller
     {
         ClarifaiClient clarifai = new ClarifaiClient(APP_ID, APP_SECRET);
         List<RecognitionResult> results =
-                clarifai.recognize(new RecognitionRequest(new File("kittens.jpg")));
+                clarifai.recognize(new RecognitionRequest(new File(path)));
 
         for (Tag tag : results.get(0).getTags())
         {
