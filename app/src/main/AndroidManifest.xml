@@ -18,8 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecognitionActivity">
-
+        <activity
+            android:name=".RecognitionActivity"
+            android:label="@string/title_activity_recognition" >
         </activity>
     </application>
 
