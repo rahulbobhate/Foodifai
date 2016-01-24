@@ -201,7 +201,7 @@ public class RecognitionActivity extends AppCompatActivity
                         sum-=30;
                     }
                 }
-                if((flag==0)&&(sum==0))
+                if((flag==0))
                 {
                     textView.setText(" Oops!! This doesn't seem to be food at all");
                     finalscore.setText("Current Score N/A" + "\nTotal Score " + currentUser.getNumber("Points").intValue());
