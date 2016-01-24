@@ -176,23 +176,7 @@ public class RecognitionActivity extends AppCompatActivity
             if (result.getStatusCode() == RecognitionResult.StatusCode.OK)
             {
                 // Display the list of tags in the UI.
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("cheese", -13);
-        map.put("pizza", -11);
-        map.put("meat", +18);
-        map.put("tomato", +4);
-        map.put("onion", +4);
-        map.put("vegetable", +14);
-        map.put("salad", +30);
-        map.put("chicken", +5);
-        map.put("healthy", +40);
-        map.put("unhealthy", -30);
-        map.put("pepper", +4);
-        map.put("garlic", +4);
-        map.put("french fries", -15);
-        map.put("potato", +4);
-        map.put("fry", -15);
-        map.put("junk", -20);
+        Map<String, Integer> map = LoginActivity.map;
         int sum=0;
 
         currentUser = ParseUser.getCurrentUser();
@@ -202,19 +186,18 @@ public class RecognitionActivity extends AppCompatActivity
                     b.append(b.length() > 0 ? ", " : "").append(tag.getName());
                     if(map.containsKey(tag.getName()))
                     {
-            /*b.append(b.length() > 0 ? ", " : "").append(tag.getName() + " is " + map.get(tag.getName()));*/
-                        //textView.setText("Tags:\n" + b + "It is unhealthy : score -10");
-                        sum = sum + map.get(tag.getName());
+                        b.append(tag.getName()+":"+tag.getProbability()+" ");
+                        sum += (map.get(tag.getName()) * tag.getProbability());
                     }
 
                 }
                 if(sum>0)
                 {
-                    textView.setText("This seems to be healthy food");
+                    textView.setText("This food seems to be healthy");
                 }
                 else
                 {
-                    textView.setText("This seems to be unhealthy food");
+                    textView.setText("This food seems to be unhealthy");
                 }
                 total = sum + currentUser.getNumber("Points").intValue();
                 finalscore.setText("My Score " + sum);
