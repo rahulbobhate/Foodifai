@@ -1,16 +1,56 @@
 package net.stupidiot.foodifai;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class HomePage extends AppCompatActivity {
 
+    Button createGroupButton;
+    Button viewGroupButton;
+    Button uploadPicButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        createGroupButton = (Button) findViewById(R.id.createGroupBtn);
+        viewGroupButton = (Button) findViewById(R.id.viewGroupBtn);
+        uploadPicButton = (Button) findViewById(R.id.uploadPicBtn);
+
+        createGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                        HomePage.this,
+                        RecognitionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        viewGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                        HomePage.this,
+                        ViewGroupActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        uploadPicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                        HomePage.this,
+                        RecognitionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
