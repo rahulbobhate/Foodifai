@@ -73,6 +73,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:text="Register"
+                android:background="#79C879"
                 android:textColor="#FFF" />
 
 
