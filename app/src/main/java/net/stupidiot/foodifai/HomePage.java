@@ -13,6 +13,7 @@ public class HomePage extends AppCompatActivity {
     Button createGroupButton;
     Button viewGroupButton;
     Button uploadPicButton;
+    Button leaderBoardButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,14 +22,16 @@ public class HomePage extends AppCompatActivity {
         createGroupButton = (Button) findViewById(R.id.createGroupBtn);
         viewGroupButton = (Button) findViewById(R.id.viewGroupBtn);
         uploadPicButton = (Button) findViewById(R.id.uploadPicBtn);
+        leaderBoardButton = (Button) findViewById(R.id.leaderBoardBtn);
 
         createGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(
                         HomePage.this,
-                        RecognitionActivity.class);
+                        CreateGroupActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -48,6 +51,16 @@ public class HomePage extends AppCompatActivity {
                 Intent intent = new Intent(
                         HomePage.this,
                         RecognitionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        leaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                        HomePage.this,
+                        LeaderBoardActivity.class);
                 startActivity(intent);
             }
         });

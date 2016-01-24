@@ -12,6 +12,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:text="Create Group"
+        android:background="#79C879"
     android:textColor="#FFF" />
 
     <Button
@@ -21,15 +22,27 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/createGroupBtn"
         android:text="View Groups"
+        android:background="#79C879"
         android:textColor="#FFF" />
 
     <Button
-        android:id="@+id/uploadPicBtn"
+    android:id="@+id/uploadPicBtn"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_below="@+id/viewGroupBtn"
+    android:text="Upload"
+        android:background="#79C879"
+    android:textColor="#FFF" />
+
+    <Button
+        android:id="@+id/leaderBoardBtn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/viewGroupBtn"
-        android:text="Upload"
+        android:layout_below="@+id/uploadPicBtn"
+        android:text="Leader Board"
+        android:background="#79C879"
         android:textColor="#FFF" />
 
 </RelativeLayout>

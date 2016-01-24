@@ -6,7 +6,78 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="net.stupidiot.foodifai.CreateGroupActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+   <!-- <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar"></include>-->
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_groupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/app_bar"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/groupNameTxt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/groupname_icon"
+            android:hint="Group Name" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_groupMembers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/input_layout_groupName"
+        android:layout_alignLeft="@+id/input_layout_groupName"
+        android:layout_alignRight="@+id/input_layout_groupName"
+        android:layout_alignStart="@+id/input_layout_groupName"
+        android:layout_below="@+id/input_layout_groupName"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/addGroupMemberTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoText="false"
+            android:drawableLeft="@mipmap/emailid_icon"
+            android:drawableRight="@mipmap/plus"
+            android:ems="10"
+            android:hint="Group Members"
+            android:inputType="textEmailAddress" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/memberTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Members"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/input_layout_groupMembers"
+        android:layout_alignLeft="@+id/input_layout_groupMembers"
+        android:layout_alignStart="@+id/input_layout_groupMembers"
+        android:layout_alignRight="@+id/input_layout_groupMembers"
+        android:layout_alignEnd="@+id/input_layout_groupMembers"
+        android:textColor="#79C879"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+    <ListView
+        android:id="@+id/memberListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/memberTitle"
+        android:layout_alignLeft="@+id/memberTitle"
+        android:layout_alignStart="@+id/memberTitle"
+        android:layout_alignRight="@+id/memberTitle"
+        android:layout_alignEnd="@+id/memberTitle" />
 
 </RelativeLayout>
