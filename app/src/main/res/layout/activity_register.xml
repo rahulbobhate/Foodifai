@@ -6,11 +6,9 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="net.stupidiot.foodifai.RegisterActivity">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar"></include>
+
     <ScrollView
-        android:layout_below="@+id/app_bar"
+        
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
