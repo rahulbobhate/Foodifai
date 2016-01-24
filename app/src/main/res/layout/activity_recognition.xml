@@ -24,6 +24,19 @@ tools:context=".RecognitionActivity">
     android:layout_weight="0.4"
     />
 
+    <TextView
+        android:id="@+id/myScore"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"/>
+
 <Button
     android:id="@+id/select_button"
     android:layout_width="wrap_content"
@@ -35,5 +48,6 @@ tools:context=".RecognitionActivity">
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     />
+
 
 </LinearLayout>

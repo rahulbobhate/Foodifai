@@ -18,17 +18,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.clarifai.api.ClarifaiClient;
 import com.clarifai.api.RecognitionRequest;
 import com.clarifai.api.RecognitionResult;
 import com.clarifai.api.Tag;
 import com.clarifai.api.exception.ClarifaiException;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import static android.provider.MediaStore.Images.Media;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecognitionActivity extends AppCompatActivity
 {
@@ -42,8 +50,10 @@ public class RecognitionActivity extends AppCompatActivity
     private Button selectButton;
     private ImageView imageView;
     private TextView textView;
-
+  private TextView finalscore;
+    private int total;
     private static int CODE_PICK = 1;
+    ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,6 +63,8 @@ public class RecognitionActivity extends AppCompatActivity
         imageView = (ImageView) findViewById(R.id.image_view);
         textView = (TextView) findViewById(R.id.text_view);
         selectButton = (Button) findViewById(R.id.select_button);
+    finalscore = (TextView) findViewById(R.id.myScore);
+    finalscore.setText("My Score :0");
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,15 +159,64 @@ public class RecognitionActivity extends AppCompatActivity
             if (result.getStatusCode() == RecognitionResult.StatusCode.OK)
             {
                 // Display the list of tags in the UI.
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put("cheese", -13);
+        map.put("pizza", -11);
+        map.put("meat", +18);
+        map.put("tomato", +4);
+        map.put("onion", +4);
+        map.put("vegetable", +14);
+        map.put("salad", +30);
+        map.put("chicken", +5);
+        map.put("healthy", +40);
+        map.put("unhealthy", -30);
+        map.put("pepper", +4);
+        map.put("garlic", +4);
+        map.put("french fries", -15);
+        map.put("potato", +4);
+        map.put("fry", -15);
+        map.put("junk", -20);
+        int sum=0;
+
+        currentUser = ParseUser.getCurrentUser();
+
                 StringBuilder b = new StringBuilder();
-                for (Tag tag : result.getTags())
-                {
+                for (Tag tag : result.getTags()) {
                     b.append(b.length() > 0 ? ", " : "").append(tag.getName());
+                    if(map.containsKey(tag.getName()))
+                    {
+            /*b.append(b.length() > 0 ? ", " : "").append(tag.getName() + " is " + map.get(tag.getName()));*/
+                        //textView.setText("Tags:\n" + b + "It is unhealthy : score -10");
+                        sum = sum + map.get(tag.getName());
+                    }
+
                 }
-                textView.setText("Tags:\n" + b);
-            }
-            else
-            {
+                if(sum>0)
+                {
+                    textView.setText("This seems to be healthy food");
+                }
+                else
+                {
+                    textView.setText("This seems to be unhealthy food");
+                }
+                total = sum + currentUser.getNumber("Points").intValue();
+                finalscore.setText("My Score " + sum);
+                ParseQuery<ParseUser>  query = ParseUser.getQuery();
+                query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser parseUser, ParseException e) {
+                        if(e == null){
+                            parseUser.put("Points", total);
+                            parseUser.saveInBackground();
+                        }else{
+                            Toast.makeText(getApplicationContext(),
+                                    "Error",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+            } else {
                 Log.e(TAG, "Clarifai: " + result.getStatusMessage());
                 textView.setText("Sorry, there was an error recognizing your image.");
             }
