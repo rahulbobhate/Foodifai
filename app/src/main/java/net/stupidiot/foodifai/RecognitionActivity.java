@@ -201,12 +201,12 @@ public class RecognitionActivity extends AppCompatActivity
                         sum-=30;
                     }
                 }
-                if(flag==0)
+                if((flag==0)&&(sum==0))
                 {
                     textView.setText(" Oops!! This doesn't seem to be food at all");
                     finalscore.setText("Current Score N/A" + "\nTotal Score " + currentUser.getNumber("Points").intValue());
                 }
-                if(sum>0)
+                else if(sum>0)
                 {
                     textView.setText(" Ohh yeahhh !! This food seems to be healthy .");
                     total = sum + currentUser.getNumber("Points").intValue();
