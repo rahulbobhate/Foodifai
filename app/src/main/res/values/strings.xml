@@ -13,6 +13,8 @@
 
 
     <string name="welcome_message">Welcome to Foodifai</string>
+    <string name="title_activity_create_group">CreateGroupActivity</string>
+    <string name="title_activity_view_group">ViewGroupActivity</string>
 
 
 </resources>
