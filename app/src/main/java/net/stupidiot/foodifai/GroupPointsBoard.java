@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,11 +23,13 @@ public class GroupPointsBoard extends AppCompatActivity {
 
     List<String> groupLeaderBoardList = new ArrayList<String>();
     ListView groupLeaderBoardListView;
+    TextView groupNameTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_points_board);
-
+        groupNameTextView = (TextView)findViewById(R.id.groupTitle);
+        groupNameTextView.setText(getIntent().getStringExtra("groupName"));
         final ArrayAdapter<String> adapter = new  ArrayAdapter<String>(GroupPointsBoard.this, android.R.layout.simple_expandable_list_item_1, groupLeaderBoardList);
         groupLeaderBoardListView = (ListView)findViewById(R.id.groupLeaderBoardListView);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Groups");
@@ -37,8 +40,9 @@ public class GroupPointsBoard extends AppCompatActivity {
             public void done(List<ParseObject> list, ParseException e) {
 
                 Collections.sort(list, new ParseGroupUserComparator());
+                int count = 1;
                 for (ParseObject parseObject : list) {
-                    groupLeaderBoardList.add("Name: " + parseObject.getString("memberName") + " Points: " + parseObject.getNumber("Points"));
+                    groupLeaderBoardList.add(count++ +") " +"Name: " + parseObject.getString("memberName") + "\nPoints: " + parseObject.getNumber("Points"));
                 }
                 adapter.notifyDataSetChanged();
             }

@@ -37,8 +37,10 @@ public class LeaderBoardActivity extends AppCompatActivity {
             public void done(List<ParseUser> list, ParseException e) {
 
                 Collections.sort(list, new ParseUserComparator());
+                int count =1;
                 for (ParseUser parseUser : list) {
-                    leaderBoardList.add("Name: " + parseUser.getString("Name") + " Points: " + parseUser.getNumber("Points"));
+
+                    leaderBoardList.add(count++ +") " +"Name: " + parseUser.getString("Name") + "\nPoints: " + parseUser.getNumber("Points"));
                 }
                 adapter.notifyDataSetChanged();
             }
