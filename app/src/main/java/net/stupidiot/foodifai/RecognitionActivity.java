@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,12 +24,9 @@ import com.clarifai.api.RecognitionResult;
 import com.clarifai.api.Tag;
 import com.clarifai.api.exception.ClarifaiException;
 import com.parse.GetCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import static android.provider.MediaStore.Images.Media;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -47,10 +42,11 @@ public class RecognitionActivity extends AppCompatActivity
 
     private ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
 
-    private Button selectButton;
+    private Button uploadFromGalleryButton;
+    private Button uploadFromCameraButton;
     private ImageView imageView;
     private TextView textView;
-  private TextView finalscore;
+    private TextView finalscore;
     private int total;
     private static int CODE_PICK = 1;
     ParseUser currentUser;
@@ -62,10 +58,10 @@ public class RecognitionActivity extends AppCompatActivity
         setContentView(R.layout.activity_recognition);
         imageView = (ImageView) findViewById(R.id.image_view);
         textView = (TextView) findViewById(R.id.text_view);
-        selectButton = (Button) findViewById(R.id.select_button);
+        uploadFromGalleryButton = (Button) findViewById(R.id.select_button);
     finalscore = (TextView) findViewById(R.id.myScore);
     finalscore.setText("My Score :0");
-        selectButton.setOnClickListener(new View.OnClickListener() {
+        uploadFromGalleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Send an intent to launch the media picker.
@@ -74,6 +70,14 @@ public class RecognitionActivity extends AppCompatActivity
             }
         });
 
+        uploadFromCameraButton = (Button) findViewById(R.id.upload_camera_btn);
+ /*       uploadFromCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.)
+            }
+        });
+*/
     }
 
     @Override
@@ -88,7 +92,7 @@ public class RecognitionActivity extends AppCompatActivity
                 Log.d(TAG, "Bitmap is not null");
                 imageView.setImageBitmap(bitmap);
                 textView.setText("Recognizing...");
-                selectButton.setEnabled(false);
+                uploadFromGalleryButton.setEnabled(false);
 
                 // Run recognition on a background thread since it makes a network call.
                 new AsyncTask<Bitmap, Void, RecognitionResult>() {
@@ -223,7 +227,7 @@ public class RecognitionActivity extends AppCompatActivity
         } else {
             textView.setText("Sorry, there was an error recognizing your image.");
         }
-        selectButton.setEnabled(true);
+        uploadFromGalleryButton.setEnabled(true);
     }
 
     @Override
