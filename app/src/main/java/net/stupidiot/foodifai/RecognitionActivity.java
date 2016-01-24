@@ -59,6 +59,7 @@ public class RecognitionActivity extends AppCompatActivity
             "Be ready to run a lot after eating that.",
             "Do you work out? You should."};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
