@@ -1,9 +1,11 @@
 package net.stupidiot.foodifai;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,5 +35,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void goToUploadScreen(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(), RecognitionActivity.class);
+        startActivity(intent);
     }
 }
