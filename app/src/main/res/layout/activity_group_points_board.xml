@@ -6,10 +6,19 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="net.stupidiot.foodifai.GroupPointsBoard">
 
+    <TextView
+        android:id="@+id/groupTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
     <ListView
         android:id="@+id/groupLeaderBoardListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/groupTitle"
         android:layout_marginTop="10dp" />
 
 </RelativeLayout>
