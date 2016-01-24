@@ -31,6 +31,7 @@ public class GroupPointsBoard extends AppCompatActivity {
         groupLeaderBoardListView = (ListView)findViewById(R.id.groupLeaderBoardListView);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Groups");
         query.whereEqualTo("groupName", getIntent().getStringExtra("groupName"));
+        query.orderByDescending("Points");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {

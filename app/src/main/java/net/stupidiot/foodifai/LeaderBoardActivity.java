@@ -29,19 +29,22 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
         final ArrayAdapter<String> adapter = new  ArrayAdapter<String>(LeaderBoardActivity.this, android.R.layout.simple_expandable_list_item_1, leaderBoardList);
         leaderBoardListView = (ListView)findViewById(R.id.leaderBoardListView);
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.orderByDescending("Points");
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> list, ParseException e) {
 
                 Collections.sort(list, new ParseUserComparator());
-                for (ParseUser parseUser : list){
-                    leaderBoardList.add("Name: "+parseUser.getString("Name")+" Points: "+parseUser.getNumber("Points"));
+                for (ParseUser parseUser : list) {
+                    leaderBoardList.add("Name: " + parseUser.getString("Name") + " Points: " + parseUser.getNumber("Points"));
                 }
                 adapter.notifyDataSetChanged();
             }
         });
         leaderBoardListView.setAdapter(adapter);
+
     }
 
     @Override
