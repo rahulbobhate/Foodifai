@@ -4,6 +4,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center"
+android:background="#fff"
 tools:context=".RecognitionActivity"
 >
 
@@ -12,7 +13,9 @@ tools:context=".RecognitionActivity"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_weight="1"
-    android:src="@mipmap/sample"
+    android:src="@drawable/defaultpic"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:scaleType="centerCrop" />
 
 <TextView
@@ -29,8 +32,9 @@ tools:context=".RecognitionActivity"
     <TextView
         android:id="@+id/myScore"
         android:textColor="#000"
-        android:textSize="20sp"
+        android:textSize="12sp"
         android:text=""
+        android:layout_below="@id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -41,32 +45,34 @@ tools:context=".RecognitionActivity"
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/select_button"
+        android:layout_height="wrap_content"
+        >
+        <ImageButton
+            android:id="@+id/upload_gallery_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#3d88ec"
-            android:text="Upload from \n Gallery"
+            android:background="@drawable/oval_definition"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="8dp"
             android:paddingLeft="24dp"
+            android:src="@mipmap/gallery_upload"
             android:paddingRight="24dp"
             />
-        <Button
+        <ImageButton
             android:id="@+id/upload_camera_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#3d88ec"
-            android:text="Upload from \n Camera"
+            android:background="@drawable/oval_definition"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:src="@mipmap/camera_upload1"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
+
             />
 
     </LinearLayout>
