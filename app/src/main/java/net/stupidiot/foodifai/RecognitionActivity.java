@@ -49,6 +49,7 @@ public class RecognitionActivity extends AppCompatActivity
     private TextView finalscore;
     private int total;
     private static int CODE_PICK = 1;
+    private static int CAMERA_PICK = 1888;
     ParseUser currentUser;
 
     @Override
@@ -71,22 +72,33 @@ public class RecognitionActivity extends AppCompatActivity
         });
 
         uploadFromCameraButton = (Button) findViewById(R.id.upload_camera_btn);
- /*       uploadFromCameraButton.setOnClickListener(new View.OnClickListener() {
+        uploadFromCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.)
+                final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, CAMERA_PICK);
             }
         });
-*/
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == CODE_PICK && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK)
+        {
             // The user picked an image. Send it to Clarifai for recognition.
             Log.d(TAG, "User picked image: " + intent.getData());
-            Bitmap bitmap = loadBitmapFromUri(intent.getData());
+
+            Bitmap bitmap = null;
+            if(requestCode == CODE_PICK)
+            {
+                bitmap = loadBitmapFromUri(intent.getData());
+            }
+            else if(requestCode == CAMERA_PICK)
+            {
+                bitmap = (Bitmap) intent.getExtras().get("data");
+            }
 
             if (bitmap != null) {
                 Log.d(TAG, "Bitmap is not null");
@@ -109,6 +121,7 @@ public class RecognitionActivity extends AppCompatActivity
                 textView.setText("Unable to load selected image.");
             }
         }
+
     }
 
     /** Loads a Bitmap from a content URI returned by the media picker. */
