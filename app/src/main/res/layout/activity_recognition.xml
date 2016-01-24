@@ -14,8 +14,8 @@ tools:context=".RecognitionActivity"
     android:layout_height="100dp"
     android:layout_weight="1"
     android:src="@drawable/defaultpic"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:scaleType="centerCrop" />
 
 <TextView

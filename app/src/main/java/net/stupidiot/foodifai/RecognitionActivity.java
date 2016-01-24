@@ -53,6 +53,12 @@ public class RecognitionActivity extends AppCompatActivity
     private static int CAMERA_PICK = 1888;
     ParseUser currentUser;
 
+    private static String[] unhealthyStrings = {"Does your mom knows that you are eating this stuff?",
+            "Why don't you eat a fruit?",
+            "Try eating something healthy sometimes for a change.",
+            "Be ready to run a lot after eating that.",
+            "Do you work out? You should."};
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -61,8 +67,8 @@ public class RecognitionActivity extends AppCompatActivity
         imageView = (ImageView) findViewById(R.id.image_view);
         textView = (TextView) findViewById(R.id.text_view);
         uploadFromGalleryButton = (ImageButton) findViewById(R.id.upload_gallery_btn);
-    finalscore = (TextView) findViewById(R.id.myScore);
-    finalscore.setText("");
+        finalscore = (TextView) findViewById(R.id.myScore);
+        finalscore.setText("");
         uploadFromGalleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,10 +183,10 @@ public class RecognitionActivity extends AppCompatActivity
             if (result.getStatusCode() == RecognitionResult.StatusCode.OK)
             {
                 // Display the list of tags in the UI.
-        Map<String, Integer> map = LoginActivity.map;
-        int sum=0,flag=0;
+                Map<String, Integer> map = LoginActivity.map;
+                int sum=0,flag=0;
 
-        currentUser = ParseUser.getCurrentUser();
+                currentUser = ParseUser.getCurrentUser();
 
                 boolean containsHealthy = false, containsUnhealthy =false;
                 StringBuilder b = new StringBuilder();
@@ -208,13 +214,13 @@ public class RecognitionActivity extends AppCompatActivity
                 }
                 else if(sum>0)
                 {
-                    textView.setText(" Ohh yeahhh !! This food seems to be healthy .");
+                    textView.setText("Ohh yeah!! This food seems to be healthy.");
                     total = sum + currentUser.getNumber("Points").intValue();
                     finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 }
                 else
                 {
-                    textView.setText("Yikes !!This food seems to be unhealthy . Does your mom know you're having this ??");
+                    textView.setText("Yikes!! This food seems to be unhealthy. "+unhealthyStrings[(int)(Math.random()*6)]);
                     total = sum + currentUser.getNumber("Points").intValue();
                     finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 }
