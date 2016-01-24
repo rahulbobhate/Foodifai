@@ -1,17 +1,16 @@
 package net.stupidiot.foodifai;
 
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,7 +29,6 @@ import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class RecognitionActivity extends AppCompatActivity
@@ -181,26 +179,34 @@ public class RecognitionActivity extends AppCompatActivity
 
         currentUser = ParseUser.getCurrentUser();
 
+                boolean containsHealthy = false, containsUnhealthy =false;
                 StringBuilder b = new StringBuilder();
                 for (Tag tag : result.getTags()) {
                     b.append(b.length() > 0 ? ", " : "").append(tag.getName());
-                    if(map.containsKey(tag.getName()))
+                    if(map.containsKey(tag.getName().toLowerCase()))
                     {
-                        b.append(tag.getName()+":"+tag.getProbability()+" ");
-                        sum += (map.get(tag.getName()) * tag.getProbability());
+                        if("healthy".equalsIgnoreCase(tag.getName().toLowerCase()))
+                            containsHealthy = true;
+                        if("unhealthy".equalsIgnoreCase(tag.getName().toLowerCase()))
+                            containsUnhealthy = true;
+                        sum += (map.get(tag.getName()));
                     }
 
+                    if(containsHealthy && containsUnhealthy)
+                    {
+                        sum-=30;
+                    }
                 }
                 if(sum>0)
                 {
-                    textView.setText("This food seems to be healthy");
+                    textView.setText(b + " This food seems to be healthy");
                 }
                 else
                 {
-                    textView.setText("This food seems to be unhealthy");
+                    textView.setText(b + "This food seems to be unhealthy");
                 }
                 total = sum + currentUser.getNumber("Points").intValue();
-                finalscore.setText("My Score " + sum);
+                finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 ParseQuery<ParseUser>  query = ParseUser.getQuery();
                 query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseUser>() {
                     @Override

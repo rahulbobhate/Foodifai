@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
 
             while (scanner.hasNextLine()) {
                 String[] s = scanner.nextLine().split(":");
-                String key = s[0];
+                String key = s[0].toLowerCase();
                 Log.d(this.getClass().getSimpleName().toString(), key);
                 int value = Integer.parseInt(s[1].trim());
                 map.put(key, value);
