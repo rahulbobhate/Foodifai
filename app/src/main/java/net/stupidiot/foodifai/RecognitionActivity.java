@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +31,7 @@ import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 
 public class RecognitionActivity extends AppCompatActivity
@@ -46,8 +43,8 @@ public class RecognitionActivity extends AppCompatActivity
 
     private ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
 
-    private Button uploadFromGalleryButton;
-    private Button uploadFromCameraButton;
+    private ImageButton uploadFromGalleryButton;
+    private ImageButton uploadFromCameraButton;
     private ImageView imageView;
     private TextView textView;
     private TextView finalscore;
@@ -56,6 +53,12 @@ public class RecognitionActivity extends AppCompatActivity
     private static int CAMERA_PICK = 1888;
     ParseUser currentUser;
 
+    private static String[] unhealthyStrings = {"Does your mom knows that you are eating this stuff?",
+            "Why don't you eat a fruit?",
+            "Try eating something healthy sometimes for a change.",
+            "Be ready to run a lot after eating that.",
+            "Do you work out? You should."};
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -63,9 +66,9 @@ public class RecognitionActivity extends AppCompatActivity
         setContentView(R.layout.activity_recognition);
         imageView = (ImageView) findViewById(R.id.image_view);
         textView = (TextView) findViewById(R.id.text_view);
-        uploadFromGalleryButton = (Button) findViewById(R.id.select_button);
-    finalscore = (TextView) findViewById(R.id.myScore);
-    finalscore.setText("My Score :0");
+        uploadFromGalleryButton = (ImageButton) findViewById(R.id.upload_gallery_btn);
+        finalscore = (TextView) findViewById(R.id.myScore);
+        finalscore.setText("");
         uploadFromGalleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +78,7 @@ public class RecognitionActivity extends AppCompatActivity
             }
         });
 
-        uploadFromCameraButton = (Button) findViewById(R.id.upload_camera_btn);
+        uploadFromCameraButton = (ImageButton) findViewById(R.id.upload_camera_btn);
         uploadFromCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,10 +183,10 @@ public class RecognitionActivity extends AppCompatActivity
             if (result.getStatusCode() == RecognitionResult.StatusCode.OK)
             {
                 // Display the list of tags in the UI.
-        Map<String, Integer> map = LoginActivity.map;
-        int sum=0;
+                Map<String, Integer> map = LoginActivity.map;
+                int sum=0,flag=0;
 
-        currentUser = ParseUser.getCurrentUser();
+                currentUser = ParseUser.getCurrentUser();
 
                 boolean containsHealthy = false, containsUnhealthy =false;
                 StringBuilder b = new StringBuilder();
@@ -191,6 +194,7 @@ public class RecognitionActivity extends AppCompatActivity
                     b.append(b.length() > 0 ? ", " : "").append(tag.getName());
                     if(map.containsKey(tag.getName().toLowerCase()))
                     {
+                        flag=1;
                         if("healthy".equalsIgnoreCase(tag.getName().toLowerCase()))
                             containsHealthy = true;
                         if("unhealthy".equalsIgnoreCase(tag.getName().toLowerCase()))
@@ -203,16 +207,24 @@ public class RecognitionActivity extends AppCompatActivity
                         sum-=30;
                     }
                 }
-                if(sum>0)
+                if((flag==0))
                 {
-                    textView.setText(b + " This food seems to be healthy");
+                    textView.setText(" Oops!! This doesn't seem to be food at all");
+                    finalscore.setText("Current Score N/A" + "\nTotal Score " + currentUser.getNumber("Points").intValue());
+                }
+                else if(sum>0)
+                {
+                    textView.setText("Ohh yeah!! This food seems to be healthy.");
+                    total = sum + currentUser.getNumber("Points").intValue();
+                    finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 }
                 else
                 {
-                    textView.setText(b + "This food seems to be unhealthy");
+                    textView.setText("Yikes!! This food seems to be unhealthy. "+unhealthyStrings[(int)(Math.random()*6)]);
+                    total = sum + currentUser.getNumber("Points").intValue();
+                    finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 }
-                total = sum + currentUser.getNumber("Points").intValue();
-                finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
+
                 ParseQuery<ParseUser>  query = ParseUser.getQuery();
                 query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseUser>() {
                     @Override

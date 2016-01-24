@@ -4,6 +4,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center"
+android:background="#fff"
 tools:context=".RecognitionActivity"
 >
 
@@ -12,7 +13,9 @@ tools:context=".RecognitionActivity"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_weight="1"
-    android:src="@mipmap/sample"
+    android:src="@drawable/defaultpic"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:scaleType="centerCrop" />
 
 <TextView
@@ -22,51 +25,55 @@ tools:context=".RecognitionActivity"
     android:gravity="center"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="60dp"
     android:layout_weight="0.4"
     />
 
     <TextView
         android:id="@+id/myScore"
         android:textColor="#000"
-        android:textSize="20sp"
-        android:text=""
+        android:textSize="12sp"
+        android:text="300"
+        android:layout_below="@id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginBottom="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="0dp"
         android:paddingLeft="4dp"
-        android:paddingRight="4dp"/>
+        android:paddingRight="4dp"
+        android:textAlignment="center" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/select_button"
+        android:layout_height="wrap_content"
+        >
+        <ImageButton
+            android:id="@+id/upload_gallery_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#3d88ec"
-            android:text="Upload from \n Gallery"
+            android:background="@drawable/oval_definition"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="8dp"
             android:paddingLeft="24dp"
+            android:src="@mipmap/gallery_upload"
             android:paddingRight="24dp"
             />
-        <Button
+        <ImageButton
             android:id="@+id/upload_camera_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#3d88ec"
-            android:text="Upload from \n Camera"
+            android:background="@drawable/oval_definition"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:src="@mipmap/camera_upload1"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
+
             />
 
     </LinearLayout>
