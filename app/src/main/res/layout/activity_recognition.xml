@@ -14,8 +14,8 @@ tools:context=".RecognitionActivity"
     android:layout_height="100dp"
     android:layout_weight="1"
     android:src="@drawable/defaultpic"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:scaleType="centerCrop" />
 
 <TextView
@@ -25,7 +25,7 @@ tools:context=".RecognitionActivity"
     android:gravity="center"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="60dp"
     android:layout_weight="0.4"
     />
 
@@ -33,15 +33,16 @@ tools:context=".RecognitionActivity"
         android:id="@+id/myScore"
         android:textColor="#000"
         android:textSize="12sp"
-        android:text=""
+        android:text="300"
         android:layout_below="@id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginBottom="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="0dp"
         android:paddingLeft="4dp"
-        android:paddingRight="4dp"/>
+        android:paddingRight="4dp"
+        android:textAlignment="center" />
 
     <LinearLayout
         android:layout_width="wrap_content"
