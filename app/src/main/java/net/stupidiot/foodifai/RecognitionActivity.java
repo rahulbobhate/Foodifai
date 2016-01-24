@@ -33,6 +33,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class RecognitionActivity extends AppCompatActivity
 {
@@ -52,6 +53,12 @@ public class RecognitionActivity extends AppCompatActivity
     private static int CODE_PICK = 1;
     private static int CAMERA_PICK = 1888;
     ParseUser currentUser;
+
+    private static String[] unhealthyStrings = {"Does your mom knows that you are eating this stuff?",
+            "Why don't you eat a fruit?",
+            "Try eating something healthy sometimes for a change.",
+            "Be ready to run a lot after eating that.",
+            "Do you work out? You should.",};
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -201,20 +208,20 @@ public class RecognitionActivity extends AppCompatActivity
                         sum-=30;
                     }
                 }
-                if((flag==0)&&(sum==0))
+                if((flag==0))
                 {
                     textView.setText(" Oops!! This doesn't seem to be food at all");
                     finalscore.setText("Current Score N/A" + "\nTotal Score " + currentUser.getNumber("Points").intValue());
                 }
                 else if(sum>0)
                 {
-                    textView.setText(" Ohh yeahhh !! This food seems to be healthy .");
+                    textView.setText("Ohh yeah!! This food seems to be healthy.");
                     total = sum + currentUser.getNumber("Points").intValue();
                     finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 }
                 else
                 {
-                    textView.setText("Yikes !!This food seems to be unhealthy . Does your mom know you're having this ??");
+                    textView.setText("Yikes!! This food seems to be unhealthy. "+unhealthyStrings[(int)(Math.random()*6)]);
                     total = sum + currentUser.getNumber("Points").intValue();
                     finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 }
