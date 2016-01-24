@@ -3,6 +3,7 @@ package net.stupidiot.foodifai;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,19 +16,29 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class LoginActivity extends AppCompatActivity {
 
+    public static Map<String, Integer> map = new HashMap<>();
     EditText email;
     EditText password;
     Button loginButton;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         email = (EditText)findViewById(R.id.emailText);
         password = (EditText) findViewById(R.id.passwordText);
         loginButton = (Button) findViewById(R.id.LoginBtn);
+
+        load();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +99,26 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void load()
+    {
+        try {
+            InputStream is = getAssets().open("food.dat");
+
+            Scanner scanner = new Scanner(is);
+
+            while (scanner.hasNextLine()) {
+                String[] s = scanner.nextLine().split(":");
+                String key = s[0].toLowerCase();
+                Log.d(this.getClass().getSimpleName().toString(), key);
+                int value = Integer.parseInt(s[1].trim());
+                map.put(key, value);
+            }
+        }
+        catch (IOException e)
+        {
+            Log.e("Error while reading from food.dat", e.getMessage());
+        }
     }
 }

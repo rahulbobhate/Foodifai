@@ -1,17 +1,16 @@
 package net.stupidiot.foodifai;
 
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,8 +31,10 @@ import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
+
 import java.util.Map;
 
 public class RecognitionActivity extends AppCompatActivity
@@ -179,48 +180,39 @@ public class RecognitionActivity extends AppCompatActivity
             if (result.getStatusCode() == RecognitionResult.StatusCode.OK)
             {
                 // Display the list of tags in the UI.
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put("cheese", -13);
-        map.put("pizza", -11);
-        map.put("meat", +18);
-        map.put("tomato", +4);
-        map.put("onion", +4);
-        map.put("vegetable", +14);
-        map.put("salad", +30);
-        map.put("chicken", +5);
-        map.put("healthy", +40);
-        map.put("unhealthy", -30);
-        map.put("pepper", +4);
-        map.put("garlic", +4);
-        map.put("french fries", -15);
-        map.put("potato", +4);
-        map.put("fry", -15);
-        map.put("junk", -20);
+        Map<String, Integer> map = LoginActivity.map;
         int sum=0;
 
         currentUser = ParseUser.getCurrentUser();
 
+                boolean containsHealthy = false, containsUnhealthy =false;
                 StringBuilder b = new StringBuilder();
                 for (Tag tag : result.getTags()) {
                     b.append(b.length() > 0 ? ", " : "").append(tag.getName());
-                    if(map.containsKey(tag.getName()))
+                    if(map.containsKey(tag.getName().toLowerCase()))
                     {
-            /*b.append(b.length() > 0 ? ", " : "").append(tag.getName() + " is " + map.get(tag.getName()));*/
-                        //textView.setText("Tags:\n" + b + "It is unhealthy : score -10");
-                        sum = sum + map.get(tag.getName());
+                        if("healthy".equalsIgnoreCase(tag.getName().toLowerCase()))
+                            containsHealthy = true;
+                        if("unhealthy".equalsIgnoreCase(tag.getName().toLowerCase()))
+                            containsUnhealthy = true;
+                        sum += (map.get(tag.getName()));
                     }
 
+                    if(containsHealthy && containsUnhealthy)
+                    {
+                        sum-=30;
+                    }
                 }
                 if(sum>0)
                 {
-                    textView.setText("This seems to be healthy food");
+                    textView.setText(b + " This food seems to be healthy");
                 }
                 else
                 {
-                    textView.setText("This seems to be unhealthy food");
+                    textView.setText(b + "This food seems to be unhealthy");
                 }
                 total = sum + currentUser.getNumber("Points").intValue();
-                finalscore.setText("My Score " + sum);
+                finalscore.setText("Current Score " + sum + "\nTotal Score " + total);
                 ParseQuery<ParseUser>  query = ParseUser.getQuery();
                 query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseUser>() {
                     @Override

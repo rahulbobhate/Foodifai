@@ -4,13 +4,15 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center"
-tools:context=".RecognitionActivity">
+tools:context=".RecognitionActivity"
+>
 
 <ImageView
     android:id="@+id/image_view"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_weight="1"
+    android:src="@mipmap/sample"
     android:scaleType="centerCrop" />
 
 <TextView
@@ -26,7 +28,7 @@ tools:context=".RecognitionActivity">
 
     <TextView
         android:id="@+id/myScore"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="20sp"
         android:text=""
         android:layout_width="wrap_content"
