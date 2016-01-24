@@ -46,6 +46,14 @@
             android:name=".ViewGroupActivity"
             android:label="@string/title_activity_view_group" >
         </activity>
+        <activity
+            android:name=".LeaderBoardActivity"
+            android:label="@string/title_activity_leader_board" >
+        </activity>
+        <activity
+            android:name=".GroupPointsBoard"
+            android:label="@string/title_activity_group_points_board" >
+        </activity>
     </application>
 
 </manifest>

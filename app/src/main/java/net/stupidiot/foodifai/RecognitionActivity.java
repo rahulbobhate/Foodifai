@@ -25,9 +25,11 @@ import com.clarifai.api.RecognitionRequest;
 import com.clarifai.api.RecognitionResult;
 import com.clarifai.api.Tag;
 import com.clarifai.api.exception.ClarifaiException;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -36,6 +38,7 @@ import static android.provider.MediaStore.Images.Media;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RecognitionActivity extends AppCompatActivity
@@ -213,6 +216,19 @@ public class RecognitionActivity extends AppCompatActivity
                                     "Error",
                                     Toast.LENGTH_LONG).show();
                         }
+                    }
+                });
+
+                ParseQuery<ParseObject> query1 = ParseQuery.getQuery("Groups");
+                query1.whereEqualTo("userName", currentUser.getUsername());
+                query1.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> list, ParseException e) {
+                        for (ParseObject parseObject : list){
+                            parseObject.put("Points", total);
+                            parseObject.saveInBackground();
+                        }
+
                     }
                 });
 
